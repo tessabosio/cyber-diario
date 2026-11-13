@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cyber Defence Expert and System Administrator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Quaderno a righe fredde, inchiostro blu; i blocchi usano i colori veri di Flowgorithm. Colonna unica di lettura, diagrammi centrati. */
+  --paper:#f4f6f9; --surface:#ffffff; --ink:#16202c; --muted:#566273; --line:#d6dce4; --accent:#2343c4; --accent-soft:#e7ecfc;
+  --ok:#1d7a46; --ok-soft:#e3f4ea; --ko:#b3261e; --ko-soft:#fbe6e4;
+  --t-fill:#e6dbf6; --t-edge:#8b6ec2; --p-fill:#efecc0; --p-edge:#a29b4c; --o-fill:#c9ebc2; --o-edge:#5c9b53;
+  --i-fill:#c3d8f0; --i-edge:#5381b0; --d-fill:#f3c6ca; --d-edge:#b26672; --l-fill:#f6cc95; --l-edge:#bb823c; --blk-ink:#1d2330;
+  --f-display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --f-body:"Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --f-mono:"JetBrains Mono", ui-monospace, Consolas, monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#11151b; --surface:#19202a; --ink:#e5e9ef; --muted:#9ba6b5; --line:#2c3542; --accent:#90a7ff; --accent-soft:#1f2a4d;
+    --ok:#6fd39a; --ok-soft:#163524; --ko:#ff8f86; --ko-soft:#3d1c1a;
+    --t-fill:#3b3152; --t-edge:#a88fe0; --p-fill:#3d3b22; --p-edge:#c4bb68; --o-fill:#22402a; --o-edge:#7dc274;
+    --i-fill:#1f3550; --i-edge:#7aa6d6; --d-fill:#4a2a30; --d-edge:#d98b97; --l-fill:#4a3519; --l-edge:#dba25c; --blk-ink:#eef1f5;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#11151b; --surface:#19202a; --ink:#e5e9ef; --muted:#9ba6b5; --line:#2c3542; --accent:#90a7ff; --accent-soft:#1f2a4d;
+  --ok:#6fd39a; --ok-soft:#163524; --ko:#ff8f86; --ko-soft:#3d1c1a;
+  --t-fill:#3b3152; --t-edge:#a88fe0; --p-fill:#3d3b22; --p-edge:#c4bb68; --o-fill:#22402a; --o-edge:#7dc274;
+  --i-fill:#1f3550; --i-edge:#7aa6d6; --d-fill:#4a2a30; --d-edge:#d98b97; --l-fill:#4a3519; --l-edge:#dba25c; --blk-ink:#eef1f5;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.6}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.15;margin:0}
+h1{font-size:clamp(2rem,5vw,2.9rem);font-weight:700}
+h2{font-size:1.7rem;font-weight:700}
+h3{font-size:1.2rem;font-weight:500}
+p{margin:0}
+code,.mono{font-family:var(--f-mono);font-size:.88em}
+p code,li code,td code{background:var(--accent-soft);padding:1px 5px;border-radius:4px}
+.wrap{max-width:880px;margin:0 auto;padding:0 20px}
+header.top{border-bottom:1px solid var(--line);background:var(--surface)}
+.top .wrap{padding-top:36px;padding-bottom:20px;display:grid;gap:14px}
+.kicker{font-family:var(--f-mono);font-size:.8rem;color:var(--muted);letter-spacing:.02em}
+.lede{color:var(--muted);max-width:62ch}
+.progress{display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-size:.95rem}
+.bar{flex:1;min-width:160px;max-width:280px;height:8px;background:var(--line);border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--ok);transition:width .3s}
+nav.idx{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+nav.idx .wrap{display:flex;gap:6px;overflow-x:auto;padding-top:10px;padding-bottom:10px}
+nav.idx a{flex:none;text-decoration:none;color:var(--ink);font-size:.92rem;padding:6px 12px;border-radius:99px;border:1px solid var(--line);background:var(--surface)}
+nav.idx a:hover{border-color:var(--accent);color:var(--accent)}
+main section{padding:48px 0 8px;scroll-margin-top:60px}
+.sec-head{display:grid;gap:8px;margin-bottom:22px}
+.sec-head p{color:var(--muted);max-width:64ch}
+.stack{display:grid;gap:18px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:22px}
+.card > * + *{margin-top:12px}
+.steps{margin:0;padding-left:1.3em;display:grid;gap:8px}
+.note{border-left:3px solid var(--d-edge);background:var(--ko-soft);padding:10px 14px;font-size:.95rem}
+.note.tip{border-left-color:var(--o-edge);background:var(--ok-soft)}
+.note b{font-weight:700}
+.legend{display:grid;grid-template-columns:minmax(150px,210px) 1fr;gap:12px 18px;align-items:center}
+.legend p{color:var(--muted);font-size:.95rem}
+.legend .blk{justify-self:center}
+@media (max-width:520px){.legend{grid-template-columns:1fr}.legend .blk{justify-self:start}}
+table{border-collapse:collapse;width:100%;font-size:.93rem}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--f-display);font-weight:500;color:var(--muted)}
+td{font-variant-numeric:tabular-nums}
+.scroll{overflow-x:auto}
+.ex-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+.tag{font-family:var(--f-mono);font-size:.75rem;padding:3px 8px;border-radius:99px;background:var(--accent-soft);color:var(--accent);white-space:nowrap}
+.done{display:flex;align-items:center;gap:8px;font-size:.92rem;cursor:pointer;user-select:none}
+.done input{width:18px;height:18px;accent-color:var(--ok)}
+details{border:1px solid var(--line);border-radius:10px;background:var(--paper)}
+details > summary{cursor:pointer;padding:10px 14px;font-weight:700;list-style:none}
+details > summary::-webkit-details-marker{display:none}
+details > summary::before{content:"▸ ";color:var(--accent)}
+details[open] > summary::before{content:"▾ "}
+details > .in{padding:4px 14px 16px;display:grid;gap:12px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media (max-width:720px){.two{grid-template-columns:1fr}}
+
+/* Diagrammi di flusso */
+.fcbox{overflow-x:auto;padding:16px 8px;background:var(--paper);border-radius:10px;border:1px dashed var(--line)}
+.fc{display:flex;flex-direction:column;align-items:center;min-width:min-content;margin:0 auto}
+.blk{font-family:var(--f-mono);font-size:12.5px;line-height:1.35;color:var(--blk-ink);text-align:center;padding:8px 16px;max-width:280px;border:1.5px solid;position:relative}
+.blk.term{background:var(--t-fill);border-color:var(--t-edge);border-radius:99px;min-width:90px}
+.blk.proc{background:var(--p-fill);border-color:var(--p-edge)}
+.blk.decl{background:var(--p-fill);border-color:var(--p-edge);box-shadow:inset 7px 0 0 -5px var(--p-edge),inset 0 7px 0 -5px var(--p-edge);padding-left:20px;padding-top:12px}
+.blk.out,.blk.inp{transform:skewX(-14deg);padding:8px 22px}
+.blk.out{background:var(--o-fill);border-color:var(--o-edge)}
+.blk.inp{background:var(--i-fill);border-color:var(--i-edge)}
+.blk.out > span,.blk.inp > span{display:inline-block;transform:skewX(14deg)}
+.blk.dec{background:var(--d-edge);border:none;padding:1.5px;clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)}
+.blk.dec > span{display:block;background:var(--d-fill);clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);padding:16px 46px}
+.blk.loop{background:var(--l-edge);border:none;padding:1.5px;clip-path:polygon(14px 0,calc(100% - 14px) 0,100% 50%,calc(100% - 14px) 100%,14px 100%,0 50%)}
+.blk.loop > span{display:block;background:var(--l-fill);clip-path:polygon(13px 0,calc(100% - 13px) 0,100% 50%,calc(100% - 13px) 100%,13px 100%,0 50%);padding:9px 28px}
+.arr{width:1.5px;height:18px;background:var(--muted);position:relative;margin-bottom:5px}
+.arr::after{content:"";position:absolute;left:50%;bottom:-6px;transform:translateX(-50%);border:5px solid transparent;border-top:6px solid var(--muted);border-bottom:0}
+.branch{display:grid;grid-template-columns:auto auto;gap:22px;border-top:1.5px solid var(--muted);padding-top:0;margin-top:0}
+.branch > div{display:flex;flex-direction:column;align-items:center}
+.blabel{font-family:var(--f-body);font-size:12px;color:var(--muted);padding:4px 0 0}
+.merge{width:14px;height:14px;border-radius:50%;background:var(--d-fill);border:1.5px solid var(--d-edge);margin-top:2px}
+.empty{font-family:var(--f-body);font-size:12px;color:var(--muted);font-style:italic;padding:6px 10px}
+.loopbody{border:1.5px dashed var(--l-edge);border-radius:12px;padding:6px 14px 10px;display:flex;flex-direction:column;align-items:center}
+.loopback{font-family:var(--f-body);font-size:12px;color:var(--muted);margin-top:6px}
+
+/* Mappe */
+.recipe{list-style:none;margin:0;padding:0;display:grid;gap:10px;counter-reset:r}
+.recipe li{display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:start;counter-increment:r}
+.recipe li::before{content:counter(r);font-family:var(--f-display);font-weight:700;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent)}
+.chip{display:inline-block;font-family:var(--f-mono);font-size:.78rem;padding:1px 8px;border-radius:6px;border:1px solid;color:var(--blk-ink);margin-right:4px}
+.chip.p{background:var(--p-fill);border-color:var(--p-edge)}.chip.o{background:var(--o-fill);border-color:var(--o-edge)}
+.chip.i{background:var(--i-fill);border-color:var(--i-edge)}.chip.d{background:var(--d-fill);border-color:var(--d-edge)}
+.chip.l{background:var(--l-fill);border-color:var(--l-edge)}
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media (max-width:760px){.three{grid-template-columns:1fr}}
+.three .card h3{text-align:center}
+.types{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}
+.types div{border:1px solid var(--line);border-radius:10px;padding:12px;background:var(--paper)}
+.types b{font-family:var(--f-mono);display:block}
+.types span{color:var(--muted);font-size:.92rem}
+
+/* Quiz */
+.q{display:grid;gap:10px}
+.q .opts{display:grid;gap:8px}
+.q button{font:inherit;font-size:.95rem;text-align:left;padding:10px 14px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.q button:hover:not(:disabled){border-color:var(--accent)}
+.q button:disabled{cursor:default}
+.q button.right{background:var(--ok-soft);border-color:var(--ok);color:var(--ok);font-weight:700}
+.q button.wrong{background:var(--ko-soft);border-color:var(--ko);color:var(--ko)}
+.q .why{font-size:.93rem;color:var(--muted)}
+.q .why[hidden]{display:none}
+.qnum{font-family:var(--f-mono);font-size:.8rem;color:var(--muted)}
+.score{font-family:var(--f-display);font-size:1.1rem}
+.btn{font:inherit;font-size:.92rem;padding:8px 14px;border-radius:8px;border:1px solid var(--accent);background:transparent;color:var(--accent);cursor:pointer}
+.btn:hover{background:var(--accent-soft)}
+.log{display:grid;gap:10px}
+.log div{display:grid;grid-template-columns:150px 1fr;gap:14px;padding:12px 0;border-bottom:1px solid var(--line)}
+.log time{font-family:var(--f-mono);font-size:.85rem;color:var(--muted)}
+@media (max-width:520px){.log div{grid-template-columns:1fr;gap:4px}}
+.view[hidden]{display:none}
+nav.idx .wrap{align-items:center;justify-content:space-between}
+nav.idx .brand{border:none;background:none;padding:6px 0;font-family:var(--f-display);font-weight:700;font-size:1rem}
+nav.idx .links{display:flex;gap:6px}
+.hero{position:relative;overflow:hidden;border-radius:20px;background:#0a1120;color:#e6edfb;min-height:440px;display:grid;align-content:end;margin-top:22px;isolation:isolate}
+.hero canvas{position:absolute;inset:0;width:100%;height:100%;z-index:-1}
+.hero::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(10,17,32,0) 30%,rgba(10,17,32,.92) 100%)}
+.hero-in{padding:40px clamp(22px,5vw,48px);display:grid;gap:12px}
+.hero-k{font-family:var(--f-mono);font-size:.78rem;color:#7fe3cf;letter-spacing:.03em}
+.hero-t{font-size:clamp(2.1rem,6.5vw,4rem);font-weight:700;color:#f3f6fd;line-height:1.02}
+.hero-p{font-family:var(--f-mono);font-size:.98rem;color:#b9c7e6}
+.hero-s{font-size:.9rem;color:#8193b8}
+.prompt{color:#7fe3cf}
+.cur{color:#7fe3cf}
+@media (prefers-reduced-motion:no-preference){.cur{animation:blink 1.1s steps(1) infinite}}
+@keyframes blink{50%{opacity:0}}
+.glance{display:grid;grid-template-columns:1.3fr 1fr;gap:14px;margin-top:14px}
+.glance .card{display:grid;gap:6px;align-content:start}
+.gl-when{font-family:var(--f-display);font-weight:700;font-size:1.45rem;line-height:1.2}
+.gl-num{font-family:var(--f-display);font-weight:700;font-size:1.45rem;font-variant-numeric:tabular-nums}
+.gl-what{color:var(--muted);font-size:.95rem}
+.bar.wide{max-width:none;margin:4px 0}
+.doors{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0 30px}
+.door{position:relative;display:grid;gap:4px;text-decoration:none;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:24px 24px 26px;transition:border-color .2s,transform .2s}
+.door:hover{border-color:var(--accent)}
+@media (prefers-reduced-motion:no-preference){.door:hover{transform:translateY(-2px)}}
+.door-n{font-family:var(--f-display);font-weight:700;font-size:2.6rem;line-height:1;color:var(--accent);font-variant-numeric:tabular-nums}
+.door-l{font-family:var(--f-display);font-weight:700;font-size:1.35rem}
+.door-s{color:var(--muted);font-size:.95rem;padding-right:30px}
+.door-a{position:absolute;right:22px;bottom:22px;font-size:1.4rem;color:var(--accent)}
+@media (max-width:520px){nav.idx .brand{display:none}nav.idx .wrap{justify-content:center}}
+@media (max-width:640px){.glance,.doors{grid-template-columns:1fr}.hero{min-height:380px}}
+.subjgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.subj{display:grid;gap:6px;align-content:start;text-decoration:none;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px}
+.subj:hover{border-color:var(--accent)}
+.subj-name{font-family:var(--f-display);font-weight:700;font-size:1.08rem;line-height:1.25;text-wrap:balance}
+.subj-meta{font-size:.88rem;color:var(--muted)}
+.subj-next{font-size:.9rem}
+.subj-mat{font-family:var(--f-mono);font-size:.75rem;color:var(--accent);margin-top:4px}
+.subj[data-card="SW"]{box-shadow:inset 0 3px 0 var(--accent)}
+.subj-top{display:grid;gap:8px;padding:36px 0 18px}
+.subj-title{font-size:clamp(1.7rem,4vw,2.3rem)}
+.back{font-size:.92rem;text-decoration:none}
+.subnav{display:flex;gap:6px;flex-wrap:wrap}
+.subnav a{text-decoration:none;font-size:.88rem;padding:4px 10px;border-radius:99px;border:1px solid var(--line)}
+.subnav a:hover{border-color:var(--accent)}
+.soon{color:var(--muted);border-style:dashed}
+.next{display:grid;gap:6px;border:1.5px solid var(--accent);background:var(--accent-soft)}
+.next .big{font-family:var(--f-display);font-size:1.5rem;font-weight:700}
+.filters{display:flex;gap:8px;flex-wrap:wrap}
+.filters button{font:inherit;font-size:.9rem;padding:6px 12px;border-radius:99px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+tr.prog td:first-child{box-shadow:inset 3px 0 0 var(--l-edge)}
+tr.past td{color:var(--muted)}
+tr.today td{background:var(--accent-soft)}
+.pill{font-family:var(--f-mono);font-size:.72rem;padding:2px 7px;border-radius:99px;white-space:nowrap}
+.pill.test{background:var(--ko-soft);color:var(--ko);border:1px solid var(--ko)}
+.pill.lez{background:var(--l-fill);color:var(--blk-ink);border:1px solid var(--l-edge)}
+footer{padding:40px 0 60px;color:var(--muted);font-size:.9rem}
+
+/* Responsive */
+.stack > *, .two > *, .three > *, .glance > *, .doors > *, .subjgrid > *, main section, .card{min-width:0}
+.blk{overflow-wrap:anywhere}
+img,svg,canvas{max-width:100%}
+@media (max-width:640px){
+  body{font-size:16px}
+  .wrap{padding:0 14px}
+  .card{padding:16px}
+  main section{padding-top:32px}
+  h2{font-size:1.45rem}
+  .hero-in{padding:26px 20px}
+  .gl-when,.gl-num{font-size:1.2rem}
+  .door{padding:18px}
+  .door-n{font-size:2.1rem}
+  #calTable thead,.lesstab thead{display:none}
+  #calTable tr,.lesstab tr{display:grid;grid-template-columns:1fr auto;gap:2px 10px;padding:10px 0;border-bottom:1px solid var(--line)}
+  #calTable td,.lesstab td{border:none;padding:0;white-space:normal !important;min-width:0}
+  #calTable tr,.lesstab tr{grid-template-columns:minmax(0,1fr) auto}
+  #calTable td:nth-child(1),.lesstab td:nth-child(1){font-weight:700}
+  #calTable td:nth-child(3){display:none}
+  #calTable td:nth-child(4),#calTable td:nth-child(5){grid-column:1 / -1;color:var(--muted);font-size:.9rem}
+  .lesstab td:nth-child(3){display:none}
+  .lesstab td:nth-child(4){grid-column:1 / -1}
+  tr.prog td:first-child{box-shadow:none}
+  tr.prog{box-shadow:inset 3px 0 0 var(--l-edge);padding-left:10px !important}
+  .scroll table{min-width:0}
+  .ex-head{flex-wrap:wrap}
+  .filters{width:100%}
+  .log div{grid-template-columns:1fr}
+  .blk{font-size:11.5px;max-width:240px}
+  .blk.dec > span{padding:14px 34px}
+  .branch{gap:12px}
+}
+@media (min-width:1300px){.wrap{max-width:1040px}.subjgrid{grid-template-columns:repeat(4,1fr)}}
+</style>
+</head>
+<body>
+<nav class="idx" aria-label="Indice">
+  <div class="wrap">
+    <a class="brand" href="#home">Cyber Defence Expert</a>
+    <span class="links"><a href="#home">Home</a><a href="#materie">Materie</a><a href="#calendario">Calendario</a></span>
+  </div>
+</nav>
+
+<main class="wrap">
+<div class="view" data-view id="home">
+  <div class="hero">
+    <canvas id="net" aria-hidden="true"></canvas>
+    <div class="hero-in">
+      <span class="hero-k">Tecnico superiore System Cybersecurity · Biennio 2026-2028</span>
+      <h1 class="hero-t">Cyber Defence Expert<br>and System Administrator</h1>
+      <p class="hero-p"><span class="prompt">&gt;</span> il quaderno del corso, una lezione alla volta<span class="cur" aria-hidden="true">_</span></p>
+      <p class="hero-s">Strada delle Marche 58, Pesaro</p>
+    </div>
+  </div>
+  <div class="glance">
+    <div class="card gl-next">
+      <span class="kicker">Prossima lezione</span>
+      <span class="gl-when" id="glWhen"></span>
+      <span class="gl-what" id="glWhat"></span>
+    </div>
+    <div class="card gl-prog">
+      <span class="kicker">Avanzamento fino a Natale</span>
+      <span class="gl-num" id="glHours"></span>
+      <div class="bar wide" aria-hidden="true"><i id="glBar"></i></div>
+      <span class="gl-what" id="glDays"></span>
+    </div>
+  </div>
+  <div class="doors">
+    <a class="door" href="#materie"><span class="door-n">8</span><span class="door-l">Materie</span><span class="door-s">Lezioni, materiali ed esercizi di ogni modulo</span><span class="door-a" aria-hidden="true">→</span></a>
+    <a class="door" href="#calendario"><span class="door-n" id="doorCal"></span><span class="door-l">Calendario</span><span class="door-s">Lezioni in arrivo, con orari e test finali</span><span class="door-a" aria-hidden="true">→</span></a>
+  </div>
+</div>
+
+<div class="view" data-view id="vista-materie" hidden>
+<section id="materie">
+  <div class="sec-head" style="padding-top:12px"><h2>Le materie</h2><p>Apri una materia per vedere le sue lezioni e i materiali raccolti finora.</p></div>
+  <div class="subjgrid">
+      <a class="subj" href="#programmazione" data-card="SW"><span class="subj-name">Sviluppo software per la cyber security e fondamenti di programmazione</span><span class="subj-meta"></span><span class="subj-next"></span><span class="subj-mat">Flowgorithm · lezione 1, quiz, esercizi</span></a>
+      <a class="subj" href="#basi-di-dati" data-card="DB"><span class="subj-name">Basi di dati relazionali</span><span class="subj-meta"></span><span class="subj-next"></span><span class="subj-mat">Materiali: ancora nessuno</span></a>
+      <a class="subj" href="#reti-e-sistemi" data-card="RE"><span class="subj-name">Amministrazione di reti e sistemi</span><span class="subj-meta"></span><span class="subj-next"></span><span class="subj-mat">Materiali: ancora nessuno</span></a>
+      <a class="subj" href="#soft-skills" data-card="SS"><span class="subj-name">Soft skills relazionali: comunicare e collaborare in azienda</span><span class="subj-meta"></span><span class="subj-next"></span><span class="subj-mat">Materiali: ancora nessuno</span></a>
+      <a class="subj" href="#organizzazione-impresa" data-card="OI"><span class="subj-name">Organizzazione d'impresa nel settore di riferimento</span><span class="subj-meta"></span><span class="subj-next"></span><span class="subj-mat">Materiali: ancora nessuno</span></a>
+      <a class="subj" href="#sicurezza-lavoro" data-card="SL"><span class="subj-name">Sicurezza nei luoghi di lavoro</span><span class="subj-meta"></span><span class="subj-next"></span><span class="subj-mat">Materiali: ancora nessuno</span></a>
+      <a class="subj" href="#inglese" data-card="EN"><span class="subj-name">Lingua Inglese</span><span class="subj-meta"></span><span class="subj-next"></span><span class="subj-mat">Materiali: ancora nessuno</span></a>
+      <a class="subj" href="#orientamento" data-card="OR"><span class="subj-name">Orientamento al percorso didattico e all'ingresso in azienda</span><span class="subj-meta"></span><span class="subj-next"></span><span class="subj-mat">Materiali: ancora nessuno</span></a>
+  </div>
+</section>
+
+<section id="come-si-usa">
+  <div class="sec-head"><h2>Come si usa</h2></div>
+  <div class="card">
+    <ol class="steps">
+      <li><b>Salva il link di questa pagina.</b> È sempre la stessa pagina e cresce a ogni lezione.</li>
+      <li><b>Dopo una lezione</b> manda a Claude foto, appunti o file insieme al link del sito, e di' a quale materia appartengono. Il materiale viene aggiunto nella sezione di quella materia, senza rifare il resto.</li>
+      <li><b>Gli esercizi si fanno prima da soli.</b> Le soluzioni sono chiuse: aprile solo dopo averci provato.</li>
+      <li><b>Spunta "Fatto"</b> quando un esercizio ti riesce. Le spunte restano salvate su questo browser.</li>
+    </ol>
+  </div>
+</section>
+
+
+<section id="registro">
+  <div class="sec-head"><h2>Registro delle lezioni</h2><p>Ogni aggiornamento aggiunge una riga qui, così vedi cosa è cambiato.</p></div>
+  <div class="card log">
+    <div><time datetime="2026-11-13">13 novembre 2026</time><p>Creato il quaderno. Aggiunta la lezione 1 con i 5 esercizi fatti in classe, le basi, 4 mappe, gli errori comuni, 10 domande di quiz e 6 esercizi di pratica.</p></div>
+    <div><time datetime="2026-11-13">13 novembre 2026</time><p>Aggiunto il calendario delle lezioni fino al 31 dicembre 2026, con la prossima lezione di programmazione in evidenza.</p></div>
+    <div><time datetime="2026-11-13">13 novembre 2026</time><p>Sito adattato a PC, tablet e telefono: su schermi piccoli il calendario diventa un elenco a schede.</p></div>
+    <div><time datetime="2026-11-13">13 novembre 2026</time><p>Nuova Home d'ingresso con la prossima lezione e l'avanzamento del corso; in alto restano solo Home, Materie e Calendario.</p></div>
+    <div><time datetime="2026-11-13">13 novembre 2026</time><p>Il sito ora si apre con il nome del corso e ha una sezione per ciascuna delle 8 materie. Il materiale di Flowgorithm è nella sezione Programmazione.</p></div>
+  </div>
+</section>
+</div>
+
+<div class="view" data-view id="vista-calendario" hidden>
+<section id="calendario">
+  <div class="sec-head">
+    <h2>Calendario</h2>
+    <p>Corso Cyber Defence Expert and System Administrator, biennio 2026-2028. Lezioni in aula in Strada delle Marche 58, Pesaro. Il calendario ricevuto arriva fino al 31 dicembre 2026.</p>
+  </div>
+  <div class="stack">
+    <div class="card next" id="nextBox"></div>
+    <div class="card">
+      <div class="ex-head"><h3>Tutte le lezioni</h3>
+        <div class="filters" role="group" aria-label="Filtra il calendario">
+          <button type="button" id="f-prog" aria-pressed="true">Solo programmazione</button>
+          <button type="button" id="f-all" aria-pressed="false">Tutto il corso</button>
+        </div>
+      </div>
+      <div class="scroll"><table id="calTable">
+        <thead><tr><th>Data</th><th>Orario</th><th>Ore</th><th>Modulo</th><th>Docente</th></tr></thead>
+        <tbody></tbody>
+      </table></div>
+      <p style="color:var(--muted);font-size:.92rem" id="calSum"></p>
+      <p style="color:var(--muted);font-size:.92rem">Collegamento Zoom indicato nel calendario: <a href="https://us02web.zoom.us/j/8137464210">us02web.zoom.us/j/8137464210</a>. L'8 dicembre è festivo; dal 24 al 31 dicembre non ci sono lezioni.</p>
+    </div>
+  </div>
+</section>
+</div>
+
+
+<div class="view" data-view id="programmazione" hidden>
+  <div class="subj-top">
+    <a class="back" href="#materie">← Tutte le materie</a>
+    <span class="kicker" data-doc="SW"></span>
+    <h2 class="subj-title">Sviluppo software per la cyber security e fondamenti di programmazione</h2>
+  </div>
+  <div class="card">
+    <h3>Lezioni in calendario</h3>
+    <div class="scroll"><table class="lesstab" data-lessons="SW"><thead><tr><th>Data</th><th>Orario</th><th>Ore</th><th></th></tr></thead><tbody></tbody></table></div>
+  </div>
+  <div class="card" style="margin-top:18px">
+    <h3>Flowgorithm</h3>
+    <p style="color:var(--muted)">Diagrammi di flusso, esercizi della classe spiegati, mappe, quiz ed esercizi per allenarti.</p>
+    <div class="progress"><span id="progText">Esercizi completati: 0 su 0</span><div class="bar" aria-hidden="true"><i id="progBar"></i></div></div>
+    <nav class="subnav" aria-label="Sezioni di programmazione">
+      <a href="#basi">Le basi</a><a href="#lezione-1">Lezione 1</a><a href="#mappe">Mappe</a><a href="#errori">Errori comuni</a><a href="#quiz">Quiz</a><a href="#pratica">Esercizi</a>
+    </nav>
+  </div>
+<section id="basi">
+  <div class="sec-head">
+    <h2>Le basi</h2>
+    <p>Ogni diagramma di Flowgorithm è fatto con pochi blocchi. Il colore ti dice subito che tipo di blocco stai guardando.</p>
+  </div>
+  <div class="stack">
+    <div class="card">
+      <h3>I blocchi</h3>
+      <div class="legend">
+        <div class="blk term">Inizio / Fine</div><p>Dove parte e dove finisce il programma. Ce n'è uno di ciascuno.</p>
+        <div class="blk decl">Dichiara eta: Intero</div><p><b>Dichiara</b> crea una variabile: una scatola con un nome e un tipo. All'inizio è vuota.</p>
+        <div class="blk proc">eta = 18</div><p><b>Assegna</b> mette un valore nella scatola. Si legge da destra a sinistra: calcola quello che sta a destra e mettilo nella variabile a sinistra.</p>
+        <div class="blk out"><span>Scrivi "Ciao"</span></div><p><b>Scrivi</b> è l'output: il computer mostra un messaggio.</p>
+        <div class="blk inp"><span>Leggi eta</span></div><p><b>Leggi</b> è l'input: l'utente scrive qualcosa e il valore finisce nella variabile.</p>
+        <div class="blk dec"><span>eta &gt;= 18</span></div><p><b>Se</b> fa una domanda con risposta Vero o Falso. Il programma prende una sola delle due strade, poi le strade si riuniscono nel pallino.</p>
+        <div class="blk loop"><span>continua = True</span></div><p><b>Mentre</b> ripete i blocchi al suo interno finché la condizione è Vera. La controlla prima di ogni giro.</p>
+      </div>
+    </div>
+    <div class="card">
+      <h3>I tipi di variabile</h3>
+      <div class="types">
+        <div><b>Intero</b><span>Numeri senza virgola: 18, 21, -3</span></div>
+        <div><b>Reale</b><span>Numeri con la virgola: 4.99 (in Flowgorithm si scrive col punto)</span></div>
+        <div><b>Stringa</b><span>Testo, tra virgolette: "Anna", "No"</span></div>
+        <div><b>Booleano</b><span>Solo True (vero) o False (falso)</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Simboli da sapere</h3>
+      <div class="scroll"><table>
+        <thead><tr><th>Simbolo</th><th>Significato</th><th>Esempio</th></tr></thead>
+        <tbody>
+          <tr><td><code>&amp;</code></td><td>Unisce pezzi di testo</td><td><code>"Ciao " &amp; nome</code> diventa "Ciao Anna"</td></tr>
+          <tr><td><code>=</code> (in un Assegna)</td><td>Mette un valore nella variabile</td><td><code>totale = 0</code></td></tr>
+          <tr><td><code>=</code> (in un Se o Mentre)</td><td>Confronta: è uguale?</td><td><code>risposta = "No"</code></td></tr>
+          <tr><td><code>&gt;=</code> <code>&lt;=</code></td><td>Maggiore o uguale, minore o uguale</td><td><code>eta &gt;= 18</code> è Vero anche con 18</td></tr>
+          <tr><td><code>&gt;</code> <code>&lt;</code></td><td>Maggiore, minore (senza l'uguale)</td><td><code>eta &gt; 18</code> è Falso con 18</td></tr>
+          <tr><td><code>+ - * /</code></td><td>Operazioni</td><td><code>etaminima - eta</code></td></tr>
+        </tbody>
+      </table></div>
+      <p class="note tip"><b>Lo spazio conta.</b> <code>"Ciao " &amp; nome</code> scrive "Ciao Anna". Senza lo spazio prima delle virgolette uscirebbe "CiaoAnna".</p>
+    </div>
+  </div>
+</section>
+
+<section id="lezione-1">
+  <div class="sec-head">
+    <span class="kicker">Lezione 1 · giovedì 12 novembre 2026 · prof. Arosti</span>
+    <h2>Primi programmi: sequenza, Se, Mentre</h2>
+    <p>Cinque esercizi in ordine di difficoltà. I primi due vanno dritti dall'inizio alla fine, il terzo e il quarto scelgono una strada, il quinto ripete.</p>
+  </div>
+  <div class="stack" id="lesson1"></div>
+<div class="stack" style="margin-top:18px"><div class="card soon" style="margin-top:18px"><h3>Lezione 2 · lunedì 16 novembre, 14:30-18:30</h3><p style="color:var(--muted);margin-top:6px">Arriva dopo la lezione: manda le foto degli esercizi e il link di questa pagina.</p></div></div>
+</section>
+
+<section id="mappe">
+  <div class="sec-head">
+    <h2>Mappe da usare per ogni esercizio</h2>
+    <p>Quando non sai da dove partire, segui la mappa 1. Le altre ti aiutano a scegliere la struttura e i tipi.</p>
+  </div>
+  <div class="stack">
+    <div class="card">
+      <h3>Mappa 1 · La ricetta di ogni programma</h3>
+      <ol class="recipe">
+        <li><div><b>Quali dati mi servono?</b><br><span class="chip p">Dichiara</span> una variabile per ciascuno, con il tipo giusto (mappa 3).</div></li>
+        <li><div><b>Devo chiederli all'utente?</b><br><span class="chip o">Scrivi</span> la domanda, poi <span class="chip i">Leggi</span> la risposta. Sempre in questo ordine.</div></li>
+        <li><div><b>Cosa ci devo fare?</b><br>Calcoli con <span class="chip p">Assegna</span>. Se devi <b>scegliere</b> usa <span class="chip d">Se</span>. Se devi <b>ripetere</b> usa <span class="chip l">Mentre</span>.</div></li>
+        <li><div><b>Cosa mostro alla fine?</b><br><span class="chip o">Scrivi</span> il risultato, unendo testo e variabili con <code>&amp;</code>.</div></li>
+        <li><div><b>Prova a mano.</b><br>Inventa dei valori e segui il diagramma su un foglio, una colonna per variabile.</div></li>
+      </ol>
+    </div>
+    <div>
+      <h3 style="margin-bottom:12px">Mappa 2 · Le tre strutture</h3>
+      <div class="three">
+        <div class="card"><h3>Sequenza</h3><div class="fcbox" data-fc="map-seq"></div><p class="muted" style="color:var(--muted);font-size:.93rem">Un blocco dopo l'altro, sempre tutti.</p></div>
+        <div class="card"><h3>Selezione</h3><div class="fcbox" data-fc="map-if"></div><p style="color:var(--muted);font-size:.93rem">Una sola delle due strade, poi si riuniscono.</p></div>
+        <div class="card"><h3>Iterazione</h3><div class="fcbox" data-fc="map-loop"></div><p style="color:var(--muted);font-size:.93rem">Ripete finché la condizione è Vera.</p></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Mappa 3 · Quale tipo scelgo?</h3>
+      <div class="scroll"><table>
+        <thead><tr><th>Il dato è…</th><th>Tipo</th><th>Esempi dalla lezione 1</th></tr></thead>
+        <tbody>
+          <tr><td>testo</td><td><code>Stringa</code></td><td>nome, altriProdotti</td></tr>
+          <tr><td>numero senza virgola</td><td><code>Intero</code></td><td>eta, etaminima</td></tr>
+          <tr><td>numero che può avere la virgola</td><td><code>Reale</code></td><td>importoProdotto, importoScontrino</td></tr>
+          <tr><td>sì o no</td><td><code>Booleano</code></td><td>continua</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="card">
+      <h3>Mappa 4 · Il ciclo che somma (come lo scontrino)</h3>
+      <p>Serve ogni volta che devi sommare un numero di valori che non conosci prima. Sono tre pezzi fissi: il totale parte da 0, il ciclo aggiunge, una bandierina dice quando fermarsi.</p>
+      <div class="fcbox" data-fc="map-acc"></div>
+    </div>
+  </div>
+</section>
+
+<section id="errori">
+  <div class="sec-head"><h2>Errori comuni</h2><p>Quando il programma non fa quello che vuoi, controlla prima questi.</p></div>
+  <div class="card">
+    <ol class="steps">
+      <li><b>Manca lo spazio nel testo.</b> <code>"Ciao" &amp; nome</code> scrive "CiaoAnna".</li>
+      <li><b>Maiuscole diverse.</b> Per il computer "No" e "no" sono diversi. Nello scontrino, se scrivi "no" il ciclo non si ferma.</li>
+      <li><b>Il totale non parte da 0.</b> Prima di un ciclo che somma, assegna sempre <code>totale = 0</code>.</li>
+      <li><b>Ciclo infinito.</b> Se dentro il Mentre nulla può rendere falsa la condizione, il programma non finisce mai.</li>
+      <li><b>Tipo sbagliato.</b> Un prezzo come 4.99 in una variabile Intero dà errore o perde i decimali: usa Reale.</li>
+      <li><b>Assegnare e poi leggere.</b> Se scrivi <code>etaminima = 21</code> e subito dopo <code>Leggi etaminima</code>, il 21 viene sostituito da quello che scrive l'utente.</li>
+      <li><b>Leggi prima di Scrivi.</b> Se leggi prima di fare la domanda, l'utente non sa cosa scrivere.</li>
+    </ol>
+  </div>
+</section>
+
+<section id="quiz">
+  <div class="sec-head">
+    <h2>Quiz di ripasso</h2>
+    <p>Dieci domande sulla lezione 1. Clicca una risposta: ti dico subito se è giusta e perché.</p>
+  </div>
+  <div class="stack" id="quizBox"></div>
+  <div style="display:flex;gap:14px;align-items:center;margin-top:16px;flex-wrap:wrap">
+    <span class="score" id="score">Punteggio: 0 su 10</span>
+    <button class="btn" id="quizReset" type="button">Ricomincia il quiz</button>
+  </div>
+</section>
+
+<section id="pratica">
+  <div class="sec-head">
+    <h2>Esercizi per allenarti</h2>
+    <p>Costruiscili in Flowgorithm e provali con valori diversi. Poi apri la soluzione e confronta. Quelli segnati come "sfida" usano un'idea in più, spiegata nel suggerimento.</p>
+  </div>
+  <div class="stack" id="practice"></div>
+</section>
+</div>
+
+<div class="view" data-view id="basi-di-dati" hidden>
+  <div class="subj-top">
+    <a class="back" href="#materie">← Tutte le materie</a>
+    <span class="kicker" data-doc="DB"></span>
+    <h2 class="subj-title">Basi di dati relazionali</h2>
+  </div>
+  <div class="card">
+    <h3>Lezioni in calendario</h3>
+    <div class="scroll"><table class="lesstab" data-lessons="DB"><thead><tr><th>Data</th><th>Orario</th><th>Ore</th><th></th></tr></thead><tbody></tbody></table></div>
+  </div>
+  <section id="materiali-basi-di-dati">
+    <div class="sec-head"><h2>Materiali</h2></div>
+    <div class="stack">
+      <div class="card soon"><p>Ancora vuota. Dopo una lezione di questa materia manda a Claude foto, appunti o file insieme al link del sito: li aggiungo qui, lezione per lezione.</p></div>
+    </div>
+  </section>
+</div>
+
+<div class="view" data-view id="reti-e-sistemi" hidden>
+  <div class="subj-top">
+    <a class="back" href="#materie">← Tutte le materie</a>
+    <span class="kicker" data-doc="RE"></span>
+    <h2 class="subj-title">Amministrazione di reti e sistemi</h2>
+  </div>
+  <div class="card">
+    <h3>Lezioni in calendario</h3>
+    <div class="scroll"><table class="lesstab" data-lessons="RE"><thead><tr><th>Data</th><th>Orario</th><th>Ore</th><th></th></tr></thead><tbody></tbody></table></div>
+  </div>
+  <section id="materiali-reti-e-sistemi">
+    <div class="sec-head"><h2>Materiali</h2></div>
+    <div class="stack">
+      <div class="card soon"><p>Ancora vuota. Dopo una lezione di questa materia manda a Claude foto, appunti o file insieme al link del sito: li aggiungo qui, lezione per lezione.</p></div>
+    </div>
+  </section>
+</div>
+
+<div class="view" data-view id="soft-skills" hidden>
+  <div class="subj-top">
+    <a class="back" href="#materie">← Tutte le materie</a>
+    <span class="kicker" data-doc="SS"></span>
+    <h2 class="subj-title">Soft skills relazionali: comunicare e collaborare in azienda</h2>
+  </div>
+  <div class="card">
+    <h3>Lezioni in calendario</h3>
+    <div class="scroll"><table class="lesstab" data-lessons="SS"><thead><tr><th>Data</th><th>Orario</th><th>Ore</th><th></th></tr></thead><tbody></tbody></table></div>
+  </div>
+  <section id="materiali-soft-skills">
+    <div class="sec-head"><h2>Materiali</h2></div>
+    <div class="stack">
+      <div class="card soon"><p>Ancora vuota. Dopo una lezione di questa materia manda a Claude foto, appunti o file insieme al link del sito: li aggiungo qui, lezione per lezione.</p></div>
+    </div>
+  </section>
+</div>
+
+<div class="view" data-view id="organizzazione-impresa" hidden>
+  <div class="subj-top">
+    <a class="back" href="#materie">← Tutte le materie</a>
+    <span class="kicker" data-doc="OI"></span>
+    <h2 class="subj-title">Organizzazione d'impresa nel settore di riferimento</h2>
+  </div>
+  <div class="card">
+    <h3>Lezioni in calendario</h3>
+    <div class="scroll"><table class="lesstab" data-lessons="OI"><thead><tr><th>Data</th><th>Orario</th><th>Ore</th><th></th></tr></thead><tbody></tbody></table></div>
+  </div>
+  <section id="materiali-organizzazione-impresa">
+    <div class="sec-head"><h2>Materiali</h2></div>
+    <div class="stack">
+      <div class="card soon"><p>Ancora vuota. Dopo una lezione di questa materia manda a Claude foto, appunti o file insieme al link del sito: li aggiungo qui, lezione per lezione.</p></div>
+    </div>
+  </section>
+</div>
+
+<div class="view" data-view id="sicurezza-lavoro" hidden>
+  <div class="subj-top">
+    <a class="back" href="#materie">← Tutte le materie</a>
+    <span class="kicker" data-doc="SL"></span>
+    <h2 class="subj-title">Sicurezza nei luoghi di lavoro</h2>
+  </div>
+  <div class="card">
+    <h3>Lezioni in calendario</h3>
+    <div class="scroll"><table class="lesstab" data-lessons="SL"><thead><tr><th>Data</th><th>Orario</th><th>Ore</th><th></th></tr></thead><tbody></tbody></table></div>
+  </div>
+  <section id="materiali-sicurezza-lavoro">
+    <div class="sec-head"><h2>Materiali</h2></div>
+    <div class="stack">
+      <div class="card soon"><p>Ancora vuota. Dopo una lezione di questa materia manda a Claude foto, appunti o file insieme al link del sito: li aggiungo qui, lezione per lezione.</p></div>
+    </div>
+  </section>
+</div>
+
+<div class="view" data-view id="inglese" hidden>
+  <div class="subj-top">
+    <a class="back" href="#materie">← Tutte le materie</a>
+    <span class="kicker" data-doc="EN"></span>
+    <h2 class="subj-title">Lingua Inglese</h2>
+  </div>
+  <div class="card">
+    <h3>Lezioni in calendario</h3>
+    <div class="scroll"><table class="lesstab" data-lessons="EN"><thead><tr><th>Data</th><th>Orario</th><th>Ore</th><th></th></tr></thead><tbody></tbody></table></div>
+  </div>
+  <section id="materiali-inglese">
+    <div class="sec-head"><h2>Materiali</h2></div>
+    <div class="stack">
+      <div class="card soon"><p>Ancora vuota. Dopo una lezione di questa materia manda a Claude foto, appunti o file insieme al link del sito: li aggiungo qui, lezione per lezione.</p></div>
+    </div>
+  </section>
+</div>
+
+<div class="view" data-view id="orientamento" hidden>
+  <div class="subj-top">
+    <a class="back" href="#materie">← Tutte le materie</a>
+    <span class="kicker" data-doc="OR"></span>
+    <h2 class="subj-title">Orientamento al percorso didattico e all'ingresso in azienda</h2>
+  </div>
+  <div class="card">
+    <h3>Lezioni in calendario</h3>
+    <div class="scroll"><table class="lesstab" data-lessons="OR"><thead><tr><th>Data</th><th>Orario</th><th>Ore</th><th></th></tr></thead><tbody></tbody></table></div>
+  </div>
+  <section id="materiali-orientamento">
+    <div class="sec-head"><h2>Materiali</h2></div>
+    <div class="stack">
+      <div class="card soon"><p>Ancora vuota. Dopo una lezione di questa materia manda a Claude foto, appunti o file insieme al link del sito: li aggiungo qui, lezione per lezione.</p></div>
+    </div>
+  </section>
+</div>
+</main>
+<footer class="wrap">Cyber Defence Expert and System Administrator · quaderno personale di studio. Le spunte "Fatto" sono salvate solo in questo browser.</footer>
+
+<script>
+const S=(t)=>({k:'term',t}), D=(t)=>({k:'decl',t:'Dichiara '+t}), A=(t)=>({k:'proc',t}),
+      W=(t)=>({k:'out',t:'Scrivi '+t}), R=(t)=>({k:'inp',t:'Leggi '+t}),
+      IF=(t,no,yes)=>({k:'if',t,no,yes}), LOOP=(t,body)=>({k:'loop',t,body});
+const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+function renderSeq(items){
+  const box=document.createElement('div'); box.className='fc';
+  items.forEach((it,i)=>{
+    if(i>0) box.appendChild(Object.assign(document.createElement('div'),{className:'arr'}));
+    box.appendChild(renderItem(it));
+  });
+  return box;
+}
+function blk(cls,text){
+  const d=document.createElement('div'); d.className='blk '+cls;
+  if(['out','inp','dec','loop'].includes(cls)) d.innerHTML='<span>'+esc(text)+'</span>'; else d.textContent=text;
+  return d;
+}
+function renderItem(it){
+  if(it.k==='if'){
+    const g=document.createElement('div'); g.className='fc';
+    g.appendChild(blk('dec',it.t));
+    const br=document.createElement('div'); br.className='branch';
+    [['Falso',it.no],['Vero',it.yes]].forEach(([lab,list])=>{
+      const c=document.createElement('div');
+      c.appendChild(Object.assign(document.createElement('div'),{className:'blabel',textContent:lab}));
+      c.appendChild(Object.assign(document.createElement('div'),{className:'arr'}));
+      if(list.length) c.appendChild(renderSeq(list));
+      else c.appendChild(Object.assign(document.createElement('div'),{className:'empty',textContent:'(niente)'}));
+      br.appendChild(c);
+    });
+    g.appendChild(Object.assign(document.createElement('div'),{className:'arr',style:'height:10px'}));
+    g.appendChild(br);
+    g.appendChild(Object.assign(document.createElement('div'),{className:'arr'}));
+    g.appendChild(Object.assign(document.createElement('div'),{className:'merge',title:'Le strade si riuniscono'}));
+    return g;
+  }
+  if(it.k==='loop'){
+    const g=document.createElement('div'); g.className='fc';
+    g.appendChild(blk('loop',it.t));
+    g.appendChild(Object.assign(document.createElement('div'),{className:'blabel',textContent:'Vero: fai un giro'}));
+    g.appendChild(Object.assign(document.createElement('div'),{className:'arr'}));
+    const body=document.createElement('div'); body.className='loopbody';
+    body.appendChild(renderSeq(it.body));
+    body.appendChild(Object.assign(document.createElement('div'),{className:'loopback',textContent:'↺ torna al controllo'}));
+    g.appendChild(body);
+    g.appendChild(Object.assign(document.createElement('div'),{className:'blabel',textContent:'Falso: esci dal ciclo'}));
+    return g;
+  }
+  return blk(it.k,it.t);
+}
+
+const FC={
+  'map-seq':[S('Inizio'),W('"Domanda"'),R('dato'),W('risultato'),S('Fine')],
+  'map-if':[IF('condizione?',[A('strada B')],[A('strada A')])],
+  'map-loop':[LOOP('condizione?',[A('blocchi da ripetere'),A('cambia qualcosa')])],
+  'map-acc':[A('totale = 0'),A('continua = True'),LOOP('continua = True',[W('"Valore?"'),R('valore'),A('totale = totale + valore'),W('"Altro?"'),R('risposta'),IF('risposta = "No"',[],[A('continua = False')])]),W('"Totale: " & totale')],
+  e1:[S('Inizio'),W('"Dimmi come ti chiami"'),D('nome: Stringa'),R('nome'),W('"Ciao " & nome'),S('Fine')],
+  e2:[S('Inizio'),W('"Dimmi come ti chiami"'),D('nome: Stringa'),R('nome'),W('"Ciao " & nome'),W('"Dimmi quanti anni hai"'),D('eta: Intero'),R('eta'),W('"Anche io ho " & eta & " anni"'),S('Fine')],
+  e3:[S('Inizio'),W('"Quanti anni hai?"'),D('eta: Intero'),R('eta'),IF('eta >= 18',[W('"Non puoi entrare"')],[W('"Puoi entrare"')]),S('Fine')],
+  e4:[S('Inizio'),D('etaminima: Intero'),A('etaminima = 21'),W('"Qual è l\'età minima della festa?"'),R('etaminima'),W('"Quanti anni hai?"'),D('eta: Intero'),R('eta'),IF('eta >= etaminima',[W('"Non puoi entrare." & " Torna tra " & (etaminima - eta) & " anni"')],[W('"Puoi entrare"')]),S('Fine')],
+  e5:[S('Inizio'),D('continua: Booleano'),D('importoProdotto: Reale'),D('altriProdotti: Stringa'),A('continua = True'),D('importoScontrino: Reale'),A('importoScontrino = 0'),LOOP('continua = True',[W('"Quanto costa il prodotto?"'),R('importoProdotto'),A('importoScontrino = importoScontrino + importoProdotto'),W('"Hai altri prodotti?"'),R('altriProdotti'),IF('altriProdotti = "No"',[],[A('continua = False')])]),W('"Il totale è " & importoScontrino'),S('Fine')],
+  p1:[S('Inizio'),D('a: Intero'),D('b: Intero'),W('"Primo numero?"'),R('a'),W('"Secondo numero?"'),R('b'),W('"La somma è " & (a + b)'),S('Fine')],
+  p2:[S('Inizio'),D('voto: Reale'),W('"Che voto hai preso?"'),R('voto'),IF('voto >= 6',[W('"Insufficiente"')],[W('"Promosso"')]),S('Fine')],
+  p3:[S('Inizio'),D('spesa: Reale'),W('"Quanto hai speso?"'),R('spesa'),IF('spesa >= 50',[W('"Ti mancano " & (50 - spesa) & " euro"')],[W('"Spedizione gratuita"')]),S('Fine')],
+  p4:[S('Inizio'),D('altriProdotti: Stringa'),W('"Hai altri prodotti?"'),R('altriProdotti'),IF('altriProdotti = "No" or altriProdotti = "no"',[W('"Continuiamo"')],[W('"Ci fermiamo"')]),S('Fine')],
+  p5:[S('Inizio'),D('i: Intero'),A('i = 1'),LOOP('i <= 5',[W('i'),A('i = i + 1')]),W('"Finito"'),S('Fine')],
+  p6:[S('Inizio'),D('voto: Reale'),D('somma: Reale'),D('quanti: Intero'),D('risposta: Stringa'),D('continua: Booleano'),A('somma = 0'),A('quanti = 0'),A('continua = True'),LOOP('continua = True',[W('"Voto?"'),R('voto'),A('somma = somma + voto'),A('quanti = quanti + 1'),W('"Altri voti?"'),R('risposta'),IF('risposta = "No"',[],[A('continua = False')])]),W('"La media è " & (somma / quanti)'),S('Fine')]
+};
+
+const LESSON=[
+ {id:'e1',title:'1 · Come ti chiami',tag:'sequenza',
+  idea:'Lo schema di base di quasi ogni programma: fai una domanda, leggi la risposta, rispondi usando quello che hai letto.',
+  how:['<code>Scrivi</code> mostra la domanda.','<code>Dichiara nome: Stringa</code> prepara una scatola per il testo.','<code>Leggi nome</code> mette nella scatola quello che scrive l\'utente.','<code>Scrivi "Ciao " &amp; nome</code> unisce il testo fisso e il contenuto della scatola.'],
+  trace:null,
+  warn:null},
+ {id:'e2',title:'2 · Nome ed età',tag:'sequenza',
+  idea:'Lo stesso schema ripetuto due volte, con due variabili di tipo diverso: una Stringa e un Intero.',
+  how:['La prima metà è identica all\'esercizio 1.','Per l\'età serve un <code>Intero</code>, perché è un numero senza virgola.','<code>"Anche io ho " &amp; eta &amp; " anni"</code> unisce tre pezzi: testo, variabile, testo. Nota gli spazi dentro le virgolette.'],
+  trace:{head:['Input','nome','eta','Output'],rows:[['Anna, 20','"Anna"','20','Ciao Anna · Anche io ho 20 anni']]},
+  warn:null},
+ {id:'e3',title:'3 · Puoi entrare?',tag:'Se',
+  idea:'Prima volta del blocco Se: il programma fa una domanda Vero/Falso e prende una sola delle due strade.',
+  how:['Dopo aver letto l\'età, il rombo controlla <code>eta &gt;= 18</code>.','Vero (destra): scrive "Puoi entrare".','Falso (sinistra): scrive "Non puoi entrare".','Al pallino le strade si riuniscono e si va a Fine.'],
+  trace:{head:['eta','eta >= 18','Output'],rows:[['20','Vero','Puoi entrare'],['18','Vero','Puoi entrare (>= include l\'uguale)'],['15','Falso','Non puoi entrare']]},
+  warn:null},
+ {id:'e4',title:'4 · Età minima della festa',tag:'Se + calcolo',
+  idea:'Come il 3, ma il limite non è fisso: è una variabile letta dall\'utente. In più, nel ramo Falso c\'è un calcolo dentro il messaggio.',
+  how:['L\'età minima si legge da tastiera, quindi la stessa regola funziona per qualsiasi festa.','Il confronto ora è tra due variabili: <code>eta &gt;= etaminima</code>.','Nel ramo Falso, <code>(etaminima - eta)</code> calcola quanti anni mancano. Le parentesi fanno fare il conto prima di unirlo al testo.'],
+  trace:{head:['etaminima','eta','eta >= etaminima','Output'],rows:[['21','17','Falso','Non puoi entrare. Torna tra 4 anni'],['21','25','Vero','Puoi entrare'],['16','16','Vero','Puoi entrare']]},
+  warn:'<b>Passaggio inutile.</b> <code>etaminima = 21</code> viene subito sostituito da <code>Leggi etaminima</code>. Il programma funziona, ma quel blocco si può togliere.'},
+ {id:'e5',title:'5 · Lo scontrino',tag:'Mentre',
+  idea:'Prima volta del ciclo Mentre. Due idee nuove: l\'accumulatore (il totale che cresce) e la bandierina Booleana (continua) che dice quando fermarsi.',
+  how:['<code>importoScontrino = 0</code>: il salvadanaio parte vuoto.','<code>continua = True</code>: la bandierina è alzata, quindi il ciclo parte.','A ogni giro: chiede il prezzo, lo aggiunge con <code>importoScontrino = importoScontrino + importoProdotto</code>, poi chiede se ci sono altri prodotti.','Se la risposta è "No", <code>continua = False</code>. Al controllo successivo il Mentre trova Falso ed esce.','Fuori dal ciclo scrive il totale.'],
+  trace:{head:['Giro','importoProdotto','importoScontrino','altriProdotti','continua'],rows:[['prima','·','0','·','True'],['1','2.5','2.5','"Sì"','True'],['2','4','6.5','"No"','False'],['fine','','','','Scrive: Il totale è 6.5']]},
+  warn:'<b>Maiuscole.</b> Il controllo è <code>altriProdotti = "No"</code>. Se scrivi "no" o "NO" il ciclo continua. L\'esercizio di pratica 4 ti fa correggere questo punto.'}
+];
+
+const PRACTICE=[
+ {id:'p1',title:'Somma di due numeri',tag:'sequenza',text:'Chiedi due numeri interi all\'utente e scrivi "La somma è " seguito dal risultato.',hint:'Ti servono due variabili. Il calcolo può stare direttamente nello Scrivi, tra parentesi.',test:'Con 7 e 5 deve scrivere "La somma è 12".'},
+ {id:'p2',title:'Promosso o no',tag:'Se',text:'Chiedi il voto di una verifica. Se è almeno 6 scrivi "Promosso", altrimenti "Insufficiente".',hint:'"Almeno 6" vuol dire maggiore o uguale. Il voto può essere 5.5: che tipo serve?',test:'Prova 6 (Promosso), 5.5 (Insufficiente), 9 (Promosso).'},
+ {id:'p3',title:'Spedizione gratuita',tag:'Se + calcolo',text:'Un negozio regala la spedizione da 50 euro in su. Chiedi quanto hai speso: se arrivi a 50 scrivi "Spedizione gratuita", altrimenti scrivi quanti euro mancano.',hint:'È lo stesso schema dell\'esercizio 4 della lezione: il calcolo va nel ramo Falso.',test:'Con 35 deve scrivere "Ti mancano 15 euro". Con 50 "Spedizione gratuita".'},
+ {id:'p4',title:'Correggi lo scontrino',tag:'Se',text:'Fai in modo che la risposta venga accettata sia scritta "No" sia "no". Costruisci solo la parte della domanda e del controllo.',hint:'Nel rombo puoi unire due confronti con or: la condizione è Vera se almeno uno dei due è vero.',test:'Con "no" e con "No" deve fermarsi. Con "Sì" deve continuare. Poi rimetti la correzione nell\'esercizio 5 completo.'},
+ {id:'p5',title:'Conta fino a 5',tag:'sfida · Mentre',text:'Scrivi i numeri da 1 a 5, uno per riga, usando un ciclo Mentre. Alla fine scrivi "Finito".',hint:'Idea nuova: il contatore. Una variabile parte da 1 e a ogni giro aumenta di 1 (i = i + 1). Il ciclo continua finché i <= 5.',test:'Deve scrivere 1, 2, 3, 4, 5 e poi Finito. Se non scrivi i = i + 1 il ciclo non finisce mai: provalo per vedere cosa succede.'},
+ {id:'p6',title:'Media dei voti',tag:'sfida · Mentre',text:'Come lo scontrino, ma con i voti: chiedi voti finché l\'utente risponde "No", poi scrivi la media.',hint:'La media è somma diviso numero di voti. Ti serve un accumulatore (somma) e un contatore (quanti) che aumenta di 1 a ogni giro.',test:'Con 6, 8, 7 deve scrivere "La media è 7".'}
+];
+
+const QUIZ=[
+ {q:'Quale blocco usi per far scrivere un dato all\'utente?',o:['Scrivi','Leggi','Dichiara','Assegna'],a:1,w:'Leggi prende quello che l\'utente scrive. Scrivi invece è il computer che mostra un messaggio.'},
+ {q:'Che tipo di variabile usi per un prezzo come 4.99?',o:['Intero','Stringa','Reale','Booleano'],a:2,w:'I numeri con la virgola sono Reale. Un Intero non tiene i decimali.'},
+ {q:'Se nome contiene "Luca", cosa scrive Scrivi "Ciao " & nome?',o:['Ciao nome','Ciao Luca','CiaoLuca','"Ciao " Luca'],a:1,w:'& unisce il testo fisso "Ciao " (con lo spazio) e il contenuto della variabile.'},
+ {q:'Nell\'esercizio 3, se l\'utente scrive 18, cosa compare?',o:['Puoi entrare','Non puoi entrare','Niente','Un errore'],a:0,w:'>= vuol dire maggiore o uguale, quindi 18 >= 18 è Vero.'},
+ {q:'Nell\'esercizio 4, con età minima 21 ed età 17, cosa scrive?',o:['Puoi entrare','Non puoi entrare. Torna tra 4 anni','Non puoi entrare. Torna tra 38 anni','Torna tra -4 anni'],a:1,w:'eta >= etaminima è Falso, e etaminima - eta = 21 - 17 = 4.'},
+ {q:'Nell\'esercizio 4, cosa succede al 21 dopo Leggi etaminima?',o:['Resta 21','Si somma al valore letto','Viene sostituito dal valore letto','Il programma dà errore'],a:2,w:'Leggi mette nella variabile il nuovo valore, e quello vecchio si perde.'},
+ {q:'Scontrino: prodotti da 2.5 e 4, risposte "Sì" e poi "No". Quale totale scrive?',o:['4','2.5','6.5','0'],a:2,w:'0 + 2.5 = 2.5 al primo giro, 2.5 + 4 = 6.5 al secondo. Poi continua diventa False.'},
+ {q:'Scontrino: se rispondi "no" (minuscolo), cosa succede?',o:['Il ciclo si ferma','Il ciclo continua e chiede un altro prezzo','Il programma dà errore','Scrive il totale due volte'],a:1,w:'"no" è diverso da "No", quindi il Se va su Falso e continua resta True.'},
+ {q:'Perché serve importoScontrino = 0 prima del ciclo?',o:['Per far partire il ciclo','Perché il totale deve partire da zero prima di sommare','Per dichiarare la variabile','Non serve'],a:1,w:'Il ciclo aggiunge al valore che c\'è già: senza un valore di partenza non sa da dove contare.'},
+ {q:'Quando controlla la condizione il blocco Mentre?',o:['Solo alla fine','Prima di ogni giro','Solo la prima volta','Dopo ogni blocco'],a:1,w:'Il Mentre controlla prima di ogni giro: se all\'inizio la condizione fosse già Falsa, non farebbe nemmeno un giro.'}
+];
+
+let store={};
+try{store=JSON.parse(localStorage.getItem('quadernoFG')||'{}')}catch(e){store={}}
+function save(){try{localStorage.setItem('quadernoFG',JSON.stringify(store))}catch(e){}}
+function updateProgress(){
+  const ids=[...LESSON,...PRACTICE].map(x=>x.id);
+  const n=ids.filter(id=>store[id]).length;
+  document.getElementById('progText').textContent='Esercizi completati: '+n+' su '+ids.length;
+  document.getElementById('progBar').style.width=(100*n/ids.length)+'%';
+}
+function doneBox(id){
+  const l=document.createElement('label'); l.className='done';
+  l.innerHTML='<input type="checkbox" id="done-'+id+'"> Fatto';
+  const c=l.querySelector('input'); c.checked=!!store[id];
+  c.addEventListener('change',()=>{store[id]=c.checked;save();updateProgress()});
+  return l;
+}
+function head(ex){
+  const h=document.createElement('div'); h.className='ex-head';
+  h.innerHTML='<div style="display:grid;gap:6px"><h3>'+ex.title+'</h3><span class="tag" style="justify-self:start">'+ex.tag+'</span></div>';
+  h.appendChild(doneBox(ex.id)); return h;
+}
+function fcBox(key){const b=document.createElement('div');b.className='fcbox';b.appendChild(renderSeq(FC[key]));return b}
+
+const L=document.getElementById('lesson1');
+LESSON.forEach(ex=>{
+  const c=document.createElement('article'); c.className='card'; c.id='es-'+ex.id;
+  c.appendChild(head(ex));
+  c.insertAdjacentHTML('beforeend','<p>'+ex.idea+'</p>');
+  const two=document.createElement('div'); two.className='two';
+  two.appendChild(fcBox(ex.id));
+  const right=document.createElement('div'); right.style.cssText='display:grid;gap:12px;align-content:start';
+  right.innerHTML='<h3 style="font-size:1rem">Come funziona</h3><ol class="steps">'+ex.how.map(s=>'<li>'+s+'</li>').join('')+'</ol>';
+  two.appendChild(right); c.appendChild(two);
+  if(ex.trace){
+    c.insertAdjacentHTML('beforeend','<h3 style="font-size:1rem">Prova a mano</h3><div class="scroll"><table><thead><tr>'+ex.trace.head.map(h=>'<th>'+h+'</th>').join('')+'</tr></thead><tbody>'+ex.trace.rows.map(r=>'<tr>'+r.map(x=>'<td>'+esc(x)+'</td>').join('')+'</tr>').join('')+'</tbody></table></div>');
+  }
+  if(ex.warn) c.insertAdjacentHTML('beforeend','<p class="note">'+ex.warn+'</p>');
+  L.appendChild(c);
+});
+
+const P=document.getElementById('practice');
+PRACTICE.forEach((ex,i)=>{
+  const c=document.createElement('article'); c.className='card'; c.id='es-'+ex.id;
+  c.appendChild(head({...ex,title:'P'+(i+1)+' · '+ex.title}));
+  c.insertAdjacentHTML('beforeend','<p>'+esc(ex.text)+'</p><p style="color:var(--muted);font-size:.95rem"><b>Come provarlo:</b> '+esc(ex.test)+'</p>');
+  const d1=document.createElement('details'); d1.innerHTML='<summary>Suggerimento</summary><div class="in"><p>'+esc(ex.hint)+'</p></div>';
+  const d2=document.createElement('details'); d2.innerHTML='<summary>Ho provato in Flowgorithm: mostra la soluzione</summary><div class="in"></div>';
+  d2.querySelector('.in').appendChild(fcBox(ex.id));
+  c.appendChild(d1); c.appendChild(d2); P.appendChild(c);
+});
+
+document.querySelectorAll('[data-fc]').forEach(el=>el.appendChild(renderSeq(FC[el.dataset.fc])));
+
+const QB=document.getElementById('quizBox'); let score=0;
+function buildQuiz(){
+  QB.innerHTML=''; score=0; document.getElementById('score').textContent='Punteggio: 0 su '+QUIZ.length;
+  QUIZ.forEach((item,qi)=>{
+    const c=document.createElement('div'); c.className='card q';
+    c.innerHTML='<span class="qnum">Domanda '+(qi+1)+' di '+QUIZ.length+'</span><p><b>'+esc(item.q)+'</b></p>';
+    const opts=document.createElement('div'); opts.className='opts';
+    const why=document.createElement('p'); why.className='why'; why.hidden=true;
+    item.o.forEach((o,oi)=>{
+      const b=document.createElement('button'); b.type='button'; b.textContent=o;
+      b.addEventListener('click',()=>{
+        opts.querySelectorAll('button').forEach((x,xi)=>{x.disabled=true;if(xi===item.a)x.classList.add('right')});
+        if(oi===item.a){score++;why.textContent='Giusto. '+item.w}else{b.classList.add('wrong');why.textContent='Non proprio. '+item.w}
+        why.hidden=false;
+        document.getElementById('score').textContent='Punteggio: '+score+' su '+QUIZ.length;
+      });
+      opts.appendChild(b);
+    });
+    c.appendChild(opts); c.appendChild(why); QB.appendChild(c);
+  });
+}
+document.getElementById('quizReset').addEventListener('click',buildQuiz);
+buildQuiz(); updateProgress();
+
+const SW='Sviluppo software per la cyber security e fondamenti di programmazione';
+const SS='Soft skills relazionali: comunicare e collaborare in azienda', DB='Basi di dati relazionali', OI='Organizzazione d\'impresa nel settore di riferimento', RE='Amministrazione di reti e sistemi', SL='Sicurezza nei luoghi di lavoro', OR='Orientamento al percorso didattico e all\'ingresso in azienda', EN='Lingua Inglese';
+const DOC={[SW]:'Arosti Matteo',[SS]:'Manieri Riccardo',[DB]:'Paolino Giovanni',[OI]:'Tafini Paolo Riccardo',[RE]:'Pazzaglia Stefano',[SL]:'Mondini Alessandra',[OR]:'Francesconi Erica',[EN]:'Gatt Carmela'};
+const CAL=[
+ ['2026-11-11','08:30-10:30',2,OR],['2026-11-11','10:30-13:30',3,SS],
+ ['2026-11-12','14:00-19:00',5,SW],['2026-11-16','14:30-18:30',4,SW],['2026-11-17','08:30-13:30',5,DB],['2026-11-18','14:00-18:00',4,RE],
+ ['2026-11-19','08:30-13:30',5,SW],['2026-11-20','14:00-19:00',5,DB],['2026-11-23','14:30-16:30',2,OI],['2026-11-24','08:30-13:30',5,SS],
+ ['2026-11-25','08:30-13:30',5,SW],['2026-11-26','08:30-13:30',5,DB],['2026-11-30','15:00-19:00',4,DB],['2026-12-02','08:30-13:30',5,SW],
+ ['2026-12-03','14:00-19:00',5,SS],['2026-12-04','14:00-19:00',5,OI,1],['2026-12-09','14:00-18:00',4,SL,1],['2026-12-10','14:00-19:00',5,SW],
+ ['2026-12-11','15:00-19:00',4,DB],['2026-12-14','08:30-13:30',5,DB],['2026-12-15','15:00-18:00',3,DB],['2026-12-16','09:00-13:00',4,SL,1],
+ ['2026-12-17','14:00-19:00',5,EN],['2026-12-21','08:30-13:30',5,SW],['2026-12-22','14:00-19:00',5,SS],['2026-12-23','14:00-19:00',5,RE]
+];
+let nProg=0; CAL.forEach(r=>{if(r[3]===SW){nProg++;r.lez=nProg}});
+const fmt=iso=>new Date(iso+'T12:00:00').toLocaleDateString('it-IT',{weekday:'long',day:'numeric',month:'long'});
+const pad=n=>String(n).padStart(2,'0');
+const now=new Date(), todayISO=now.getFullYear()+'-'+pad(now.getMonth()+1)+'-'+pad(now.getDate());
+function isOver(r){if(r[0]!==todayISO)return r[0]<todayISO;const e=r[1].split('-')[1].split(':');return now.getHours()*60+now.getMinutes()>(+e[0])*60+(+e[1])}
+(function drawNext(){
+  const nx=CAL.find(r=>r[3]===SW&&!isOver(r)); const b=document.getElementById('nextBox');
+  if(!nx){b.innerHTML='<span class="kicker">Prossima lezione di programmazione</span><p>Non ci sono altre lezioni nel calendario attuale. Quando arriva quello nuovo, mandalo a Claude per aggiungerlo.</p>';return}
+  const t=fmt(nx[0]);
+  b.innerHTML='<span class="kicker">Prossima lezione di programmazione · lezione '+nx.lez+' di '+nProg+'</span><span class="big">'+t.charAt(0).toUpperCase()+t.slice(1)+(nx[0]===todayISO?' (oggi)':'')+'</span><p>'+nx[1]+' · '+nx[2]+' ore · prof. Arosti · Strada delle Marche 58, Pesaro</p>';
+})();
+let onlyProg=true;
+function drawCal(){
+  const tb=document.querySelector('#calTable tbody'); tb.innerHTML='';
+  const rows=CAL.filter(r=>!onlyProg||r[3]===SW);
+  rows.forEach(r=>{
+    const tr=document.createElement('tr');
+    if(r[3]===SW) tr.classList.add('prog'); if(isOver(r)) tr.classList.add('past'); if(r[0]===todayISO) tr.classList.add('today');
+    let mod=esc(r[3]); if(r.lez) mod+=' <span class="pill lez">lezione '+r.lez+'</span>'; if(r[4]) mod+=' <span class="pill test">test finale</span>';
+    tr.innerHTML='<td style="white-space:nowrap">'+fmt(r[0])+'</td><td style="white-space:nowrap">'+r[1]+'</td><td>'+r[2]+'</td><td>'+mod+'</td><td>'+esc(DOC[r[3]])+'</td>';
+    tb.appendChild(tr);
+  });
+  const h=rows.reduce((a,r)=>a+r[2],0);
+  document.getElementById('calSum').textContent=(onlyProg?'Programmazione: ':'Tutto il corso: ')+rows.length+' lezioni, '+h+' ore entro il 23 dicembre.';
+  document.getElementById('f-prog').setAttribute('aria-pressed',String(onlyProg));document.getElementById('f-all').setAttribute('aria-pressed',String(!onlyProg));
+}
+document.getElementById('f-prog').addEventListener('click',()=>{onlyProg=true;drawCal()});
+document.getElementById('f-all').addEventListener('click',()=>{onlyProg=false;drawCal()});
+drawCal();
+
+const KEY={SW,DB,RE,SS,OI,SL,EN,OR};
+Object.entries(KEY).forEach(([k,mod])=>{
+  const rows=CAL.filter(r=>r[3]===mod), h=rows.reduce((a,r)=>a+r[2],0), nx=rows.find(r=>!isOver(r)), test=rows.find(r=>r[4]);
+  document.querySelectorAll('[data-doc="'+k+'"]').forEach(e=>e.textContent='Docente: '+DOC[mod]+' · '+rows.length+(rows.length===1?' lezione, ':' lezioni, ')+h+' ore fino al 31 dicembre');
+  const card=document.querySelector('[data-card="'+k+'"]');
+  if(card){card.querySelector('.subj-meta').textContent=DOC[mod]+' · '+h+' ore';
+    card.querySelector('.subj-next').textContent=nx?('Prossima: '+fmt(nx[0])+', '+nx[1]):'Nessuna altra lezione in calendario';
+    if(test){card.querySelector('.subj-meta').textContent+=' · test finale '+new Date(test[0]+'T12:00:00').toLocaleDateString('it-IT',{day:'numeric',month:'long'})}}
+  document.querySelectorAll('[data-lessons="'+k+'"] tbody').forEach(tb=>{
+    rows.forEach(r=>{const tr=document.createElement('tr'); if(isOver(r))tr.classList.add('past'); if(r[0]===todayISO)tr.classList.add('today');
+      tr.innerHTML='<td style="white-space:nowrap">'+fmt(r[0])+'</td><td style="white-space:nowrap">'+r[1]+'</td><td>'+r[2]+'</td><td>'+(r.lez?'<span class="pill lez">lezione '+r.lez+'</span> ':'')+(r[4]?'<span class="pill test">test finale</span>':'')+'</td>';tb.appendChild(tr)});
+  });
+});
+function route(){
+  const id=decodeURIComponent(location.hash.slice(1))||'home';
+  const target=document.getElementById(id); const view=(target&&target.closest('[data-view]'))||document.getElementById('home');
+  document.querySelectorAll('[data-view]').forEach(v=>v.hidden=(v!==view));
+  if(target&&target!==view){requestAnimationFrame(()=>target.scrollIntoView({behavior:'instant'}))}else{window.scrollTo({top:0,behavior:'instant'})}
+}
+window.addEventListener('hashchange',route); route();
+(function home(){
+  const start=r=>new Date(r[0]+'T'+r[1].split('-')[0].trim()+':00'), end=r=>new Date(r[0]+'T'+r[1].split('-')[1].trim()+':00');
+  const now=new Date(), nx=CAL.find(r=>end(r)>now);
+  const cap=t=>t.charAt(0).toUpperCase()+t.slice(1);
+  if(nx){
+    const st=start(nx), diff=st-now; let when;
+    if(diff<=0) when='In corso adesso';
+    else{const d=Math.floor(diff/864e5), h=Math.floor(diff%864e5/36e5);
+      when=r0=nx[0]===todayISO?'Oggi alle '+nx[1].split('-')[0]:cap(fmt(nx[0]))+', '+nx[1].split('-')[0];
+      when+=' · tra '+(d?d+(d===1?' giorno':' giorni')+(h?' e ':''):'')+(h||!d?h+(h===1?' ora':' ore'):'');}
+    document.getElementById('glWhen').textContent=when;
+    document.getElementById('glWhat').textContent=nx[3]+' · '+DOC[nx[3]];
+  }else{document.getElementById('glWhen').textContent='Nessuna lezione in calendario';}
+  const tot=CAL.reduce((a,r)=>a+r[2],0), done=CAL.filter(r=>end(r)<=now).reduce((a,r)=>a+r[2],0);
+  document.getElementById('glHours').textContent=done+' ore su '+tot;
+  document.getElementById('glBar').style.width=(100*done/tot)+'%';
+  const left=CAL.filter(r=>end(r)>now).length;
+  document.getElementById('glDays').textContent=left+(left===1?' lezione rimasta':' lezioni rimaste')+' fino al 23 dicembre';
+  document.getElementById('doorCal').textContent=left;
+})();
+(function net(){
+  const c=document.getElementById('net'), x=c.getContext('2d'); let W,H,P=[],raf=null,dpr=Math.min(2,window.devicePixelRatio||1);
+  const still=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function size(){const r=c.getBoundingClientRect();W=r.width;H=r.height;c.width=W*dpr;c.height=H*dpr;x.setTransform(dpr,0,0,dpr,0,0);
+    const n=Math.round(Math.min(90,Math.max(36,W*H/9000)));
+    P=Array.from({length:n},(_,i)=>({x:Math.random()*W,y:Math.random()*H*.85,vx:(Math.random()-.5)*.25,vy:(Math.random()-.5)*.25,r:Math.random()*1.6+.8,hot:i%11===0}));}
+  function draw(){
+    x.clearRect(0,0,W,H);
+    const g=x.createRadialGradient(W*.78,H*.2,0,W*.78,H*.2,W*.6);g.addColorStop(0,'rgba(60,110,255,.22)');g.addColorStop(1,'rgba(60,110,255,0)');x.fillStyle=g;x.fillRect(0,0,W,H);
+    const D=130;
+    for(let i=0;i<P.length;i++){const a=P[i];for(let j=i+1;j<P.length;j++){const b=P[j],dx=a.x-b.x,dy=a.y-b.y,d=Math.hypot(dx,dy);
+      if(d<D){x.strokeStyle=(a.hot||b.hot)?'rgba(127,227,207,'+(1-d/D)*.55+')':'rgba(130,160,255,'+(1-d/D)*.35+')';x.lineWidth=1;x.beginPath();x.moveTo(a.x,a.y);x.lineTo(b.x,b.y);x.stroke();}}}
+    P.forEach(p=>{x.fillStyle=p.hot?'#7fe3cf':'#9db4ff';x.beginPath();x.arc(p.x,p.y,p.hot?p.r+1.2:p.r,0,7);x.fill();
+      if(p.hot){x.strokeStyle='rgba(127,227,207,.35)';x.beginPath();x.arc(p.x,p.y,p.r+5,0,7);x.stroke();}});
+  }
+  function step(){P.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1});draw();raf=requestAnimationFrame(step)}
+  function play(){if(still||raf||document.hidden||document.getElementById('home').hidden)return;raf=requestAnimationFrame(step)}
+  function stop(){if(raf){cancelAnimationFrame(raf);raf=null}}
+  size();draw();play();
+  window.addEventListener('resize',()=>{size();draw()});
+  document.addEventListener('visibilitychange',()=>document.hidden?stop():play());
+  window.addEventListener('hashchange',()=>{requestAnimationFrame(()=>{document.getElementById('home').hidden?stop():(size(),draw(),play())})});
+  try{new IntersectionObserver(e=>e[0].isIntersecting?play():stop()).observe(c)}catch(e){}
+})();
+</script>
+</body>
+</html>
